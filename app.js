@@ -17,13 +17,13 @@ const myApp = express();
 myApp.use(bodyParser.json());
 
 // Create new organization collection
-myApp.post('/ET_Reminders', async (req, res) => {
+myApp.post('/Health_App', async (req, res) => {
   try {
     const { id } = req.body;
     if (!id) {
       return res.status(400).send({ message: 'ID is required' });
     }
-    const docRef = db.collection('ET_Reminders').doc(id);
+    const docRef = db.collection('Health_App').doc(id);
     const data = {
       id,
       prefix: req.body.prefix,
@@ -41,7 +41,7 @@ myApp.post('/ET_Reminders', async (req, res) => {
 });
 
 // Create a new customer
-myApp.post('/ET_Reminders/:id/customers', async (req, res) => {
+myApp.post('/Health_App/:id/customers', async (req, res) => {
   try {
     const { firstName, lastName, email, phone } = req.body;
     const validationErrors = [];
@@ -61,7 +61,7 @@ myApp.post('/ET_Reminders/:id/customers', async (req, res) => {
       return res.status(400).send(validationErrors);
     }
 
-    const docRef = db.collection('ET_Reminders').doc(req.params.id).collection('Customers').doc();
+    const docRef = db.collection('Health_App').doc(req.params.id).collection('Customers').doc();
     const data = {
       firstName,
       lastName,
@@ -76,9 +76,9 @@ myApp.post('/ET_Reminders/:id/customers', async (req, res) => {
 });
 
 // Update customer
-myApp.put('/ET_Reminders/:reminderId/customers/:customerId', async (req, res) => {
+myApp.put('/Health_App/:reminderId/customers/:customerId', async (req, res) => {
   try {
-    await db.collection('ET_Reminders').doc(req.params.reminderId)
+    await db.collection('Health_App').doc(req.params.reminderId)
       .collection('Customers').doc(req.params.customerId)
       .update(req.body);
     res.status(200).send({ message: 'Customer updated successfully' });
@@ -88,9 +88,9 @@ myApp.put('/ET_Reminders/:reminderId/customers/:customerId', async (req, res) =>
 });
 
 // Update organization info
-myApp.put('/ET_Reminders/:id', async (req, res) => {
+myApp.put('/Health_App/:id', async (req, res) => {
   try {
-    const docRef = db.collection('ET_Reminders').doc(req.params.id);
+    const docRef = db.collection('Health_App').doc(req.params.id);
     const updateFields = req.body;
     // Add your validation logic here
     await docRef.update(updateFields);
@@ -101,9 +101,9 @@ myApp.put('/ET_Reminders/:id', async (req, res) => {
 });
 
 // Fetch all customers
-myApp.get('/ET_Reminders/:id/customers', async (req, res) => {
+myApp.get('/Health_App/:id/customers', async (req, res) => {
   try {
-    const snap = await db.collection('ET_Reminders').doc(req.params.id)
+    const snap = await db.collection('Health_App').doc(req.params.id)
       .collection('Customers').get();
     const customers = snap.docs.map((doc) => doc.data());
     const totalCount = snap.size;
@@ -114,9 +114,9 @@ myApp.get('/ET_Reminders/:id/customers', async (req, res) => {
 });
 
 // Fetch single customer
-myApp.get('/ET_Reminders/:id/customers/:customerId', async (req, res) => {
+myApp.get('/Health_App/:id/customers/:customerId', async (req, res) => {
   try {
-    const docRef = db.collection('ET_Reminders').doc(req.params.id)
+    const docRef = db.collection('Health_App').doc(req.params.id)
       .collection('Customers').doc(req.params.customerId);
     const snap = await docRef.get();
     if (!snap.exists) {
@@ -129,9 +129,9 @@ myApp.get('/ET_Reminders/:id/customers/:customerId', async (req, res) => {
 });
 
 // Delete all org data
-myApp.delete('/ET_Reminders/:id', async (req, res) => {
+myApp.delete('/Health_App/:id', async (req, res) => {
   try {
-    await db.collection('ET_Reminders').doc(req.params.id).delete();
+    await db.collection('Health_App').doc(req.params.id).delete();
     res.status(200).send({ message: 'Organization data deleted successfully' });
   } catch (error) {
     res.status(error.code).send(error.message);
@@ -139,9 +139,9 @@ myApp.delete('/ET_Reminders/:id', async (req, res) => {
 });
 
 // Delete customer
-myApp.delete('/ET_Reminders/:id/customers/:customerId', async (req, res) => {
+myApp.delete('/Health_App/:id/customers/:customerId', async (req, res) => {
   try {
-    const docRef = db.collection('ET_Reminders').doc(req.params.id)
+    const docRef = db.collection('Health_App').doc(req.params.id)
       .collection('Customers').doc(req.params.customerId);
     const snap = await docRef.get();
     if (!snap.exists) {

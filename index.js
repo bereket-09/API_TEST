@@ -15,7 +15,7 @@ myApp.use(bodyParser.json());
 
 
 // Create new organziaiton collection 
-myApp.post('/ET_Reminders', async (req, res) => {
+myApp.post('/Health_App', async (req, res) => {
   const validationErrors = {};
 
   if (!req.body.id) {
@@ -27,7 +27,7 @@ myApp.post('/ET_Reminders', async (req, res) => {
     return;
   }
 
-  const docRef = db.collection('ET_Reminders').doc(req.body.id);
+  const docRef = db.collection('Health_App').doc(req.body.id);
   docRef.set({
     id: req.body.id,
     prefix: req.body.prefix,
@@ -44,9 +44,9 @@ myApp.post('/ET_Reminders', async (req, res) => {
 
 
 // Create a new Customer
-myApp.post('/ET_Reminders/:id/Customers', async (req, res) => {
+myApp.post('/Health_App/:id/Customers', async (req, res) => {
   try {
-    const docRef = db.collection('ET_Reminders').doc(req.params.id);
+    const docRef = db.collection('Health_App').doc(req.params.id);
     const notesCollection = docRef.collection('Customers');
     const customer = req.body;
     const validationErrors = [];
@@ -79,9 +79,9 @@ myApp.post('/ET_Reminders/:id/Customers', async (req, res) => {
 
 
 // Update Customer
-myApp.put('/ET_Reminders/:reminderId/Customers/:customerId', async (req, res) => {
+myApp.put('/Health_App/:reminderId/Customers/:customerId', async (req, res) => {
     try {
-      const docRef = db.collection('ET_Reminders').doc(req.params.reminderId).collection('Customers').doc(req.params.customerId);
+      const docRef = db.collection('Health_App').doc(req.params.reminderId).collection('Customers').doc(req.params.customerId);
       docRef.update(req.body);
       res.status(200).send();
     } catch (error) {
@@ -91,9 +91,9 @@ myApp.put('/ET_Reminders/:reminderId/Customers/:customerId', async (req, res) =>
 
 
 //Update org info 
-  myApp.put('/ET_Reminders/:id', async (req, res) => {
+  myApp.put('/Health_App/:id', async (req, res) => {
     try {
-      const docRef = db.collection('ET_Reminders').doc(req.params.id);
+      const docRef = db.collection('Health_App').doc(req.params.id);
       const updateFields = req.body;
   
       // Add your validation logic here
@@ -108,9 +108,9 @@ myApp.put('/ET_Reminders/:reminderId/Customers/:customerId', async (req, res) =>
 
 
 //Fetch All customer
-myApp.get('/ET_Reminders/:id/customers', async (req, res) => {
+myApp.get('/Health_App/:id/customers', async (req, res) => {
   try {
-    const docRef = db.collection('ET_Reminders').doc(req.params.id);
+    const docRef = db.collection('Health_App').doc(req.params.id);
     const notesCollection = docRef.collection('Customers');
     const customers = await notesCollection.get();
 
@@ -137,9 +137,9 @@ myApp.get('/ET_Reminders/:id/customers', async (req, res) => {
 });
 
 // Fetch Single Customer
-myApp.get('/ET_Reminders/:id/customers/:customerId', async (req, res) => { 
+myApp.get('/Health_App/:id/customers/:customerId', async (req, res) => { 
   try { 
-      const docRef = db.collection('ET_Reminders').doc(req.params.id); 
+      const docRef = db.collection('Health_App').doc(req.params.id); 
       const notesCollection = docRef.collection('Customers'); 
       const customerDoc = await notesCollection.doc(req.params.customerId).get();
       if(!customerDoc.exists){ 
@@ -156,9 +156,9 @@ myApp.get('/ET_Reminders/:id/customers/:customerId', async (req, res) => {
 
 
 // Delete All Org Data
-myApp.delete('/ET_Reminders/:id', async (req, res) => {
+myApp.delete('/Health_App/:id', async (req, res) => {
   try {
-    const docRef = db.collection('ET_Reminders').doc(req.params.id);
+    const docRef = db.collection('Health_App').doc(req.params.id);
     docRef.delete();
     res.status(200).send();
   } catch (error) {
@@ -168,9 +168,9 @@ myApp.delete('/ET_Reminders/:id', async (req, res) => {
 
 
 //Delete Customers
-myApp.delete('/ET_Reminders/:id/customers/:customerId', async (req, res) => {
+myApp.delete('/Health_App/:id/customers/:customerId', async (req, res) => {
   try {
-    const docRef = db.collection('ET_Reminders').doc(req.params.id);
+    const docRef = db.collection('Health_App').doc(req.params.id);
     const customersCollection = docRef.collection('Customers');
     const customerDoc = customersCollection.doc(req.params.customerId);
 
