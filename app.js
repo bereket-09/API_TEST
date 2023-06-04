@@ -166,13 +166,13 @@ myApp.delete('/Health_App/:id/professionals/:professional_ID', async (req, res) 
 // Create a new organization
 myApp.post('/Health_App/:id/organizations', async (req, res) => {
   try {
-    const { firstName, lastName, email, phone } = req.body;
+    const { orgName, orgType, email, phone } = req.body;
     const validationErrors = [];
-    if (!firstName) {
-      validationErrors.push('First Name is required');
+    if (!orgName) {
+      validationErrors.push('Organization Name is required');
     }
-    if (!lastName) {
-      validationErrors.push('Last Name is required');
+    if (!orgType) {
+      validationErrors.push('Organization Type is required');
     }
     if (!email) {
       validationErrors.push('Email is required');
